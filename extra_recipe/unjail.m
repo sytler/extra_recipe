@@ -108,6 +108,29 @@ unjail2(uint64_t surfacevt)
 
     x(NULL, tfp0, kernel_base, kaslr_shift, (mach_port_t)surfacevt, -1);
 
+    if (0) {
+        struct utsname uts;
+        uname(&uts);
+
+        vm_offset_t off = 0xd8;
+        if (strstr(uts.version, "16.0.0")) {
+            off = 0xd0;
+        }
+
+        uint64_t rootfs_vnode = kread_uint64(constget(5) + kaslr_shift);
+        uint64_t v_mount = kread_uint64(rootfs_vnode + off);
+        uint32_t v_flag = kread_uint32(v_mount + 0x71);
+
+        kwrite_uint32(v_mount + 0x71, v_flag & ~(1 << 6));
+
+        char *nmz = strdup("/dev/disk0s1s1");
+        rv = mount("hfs", "/", MNT_UPDATE, (void *)&nmz);
+        NSLog(@"remounting: %d", rv);
+
+        v_mount = kread_uint64(rootfs_vnode + off);
+        kwrite_uint32(v_mount + 0x71, v_flag);
+    }
+
     {
         char path[4096];
         uint32_t size = sizeof(path);
