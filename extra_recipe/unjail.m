@@ -84,6 +84,16 @@ unjail2(uint64_t surfacevt)
 
         // @qwertyoruiop's memprot bypass
 
+        if (constload()) {
+            printf("err: constload\n");
+            return ERR_INTERNAL;
+        }
+
+        if (affine_const_by_surfacevt(surfacevt)) {
+            printf("err: affine\n");
+            return ERR_INTERNAL;
+        }
+
         h = dlopen(mp, RTLD_NOW | RTLD_LOCAL);
         if (!h) {
             printf("err: %s\n", dlerror());
@@ -104,12 +114,10 @@ unjail2(uint64_t surfacevt)
             return ERR_INTERNAL;
         }
 
-        *(void **)((char *)info.dli_fbase + 0x1C1B8) = (void *)affine_const_by_surfacevt;   // accept
-        *(void **)((char *)info.dli_fbase + 0x1C258) = (void *)constload;                   // listen
         *(void **)((char *)info.dli_fbase + 0x1C3B8) = (void *)constget;                    // socket
         *(void **)((char *)info.dli_fbase + 0x1C0C0) = (void *)my_IOConnectTrap4;
 
-        x(NULL, tfp0, kernel_base, kaslr_shift, (mach_port_t)surfacevt, -1);
+        x(NULL, tfp0, kernel_base, kaslr_shift, -1, -1);
     } else {
         return ERR_UNSUPPORTED_YET; // TODO: remove after writing KPP bypass
     }
