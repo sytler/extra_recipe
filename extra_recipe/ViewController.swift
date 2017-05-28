@@ -28,8 +28,16 @@ class ViewController: UIViewController {
     switch jb_go() {
         case 0:
             status = "jailbroken"
+        case 1:
+            status = "internal error"
+        case 2:
+            status = "unsupported"
+        case 3:
+            status = "unsupported yet"
+        case 42:
+            status = "hmm... ok"
         default:
-            status = "failed"
+            status = "failed, reboot"
     }
     sender.isEnabled = false
     sender.setTitle(status, for: .disabled)
