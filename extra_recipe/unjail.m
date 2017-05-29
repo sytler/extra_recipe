@@ -20,7 +20,7 @@ my_IOConnectTrap4(int conn, long unused, uint64_t x1, uint64_t x2, uint64_t x0, 
 }
 
 int
-unjail2(void)
+unjail2(bool substrate)
 {
     void *h;
     int rv;
@@ -59,7 +59,7 @@ unjail2(void)
         return ERR_UNSUPPORTED_YET; // TODO: remove after writing KPP bypass
     }
 
-    if (1) {
+    if (0) {
         struct utsname uts;
         uname(&uts);
 
@@ -81,15 +81,16 @@ unjail2(void)
         v_mount = kread_uint64(rootfs_vnode + off);
         kwrite_uint32(v_mount + 0x71, v_flag);
     }
+
     {
-        char path[256];
+        char path[4096];
         uint32_t size = sizeof(path);
         _NSGetExecutablePath(path, &size);
-        char* pt = realpath(path, 0);
-        
+        char *pt = realpath(path, NULL);
+
         {
             __block pid_t pd = 0;
-            NSString* execpath = [[NSString stringWithUTF8String:pt]  stringByDeletingLastPathComponent];
+            NSString *execpath = [[NSString stringWithUTF8String:pt]  stringByDeletingLastPathComponent];
             
             
             int f = open("/.installed_yaluX", O_RDONLY);
@@ -103,18 +104,20 @@ unjail2(void)
                 unlink("/bin/launchctl");
                 
                 copyfile(jl, "/bin/tar", 0, COPYFILE_ALL);
-                chmod("/bin/tar", 0777);
+                chmod("/bin/tar", 0755);
                 jl="/bin/tar"; //
                 
                 chdir("/");
                 
-                posix_spawn(&pd, jl, 0, 0, (char**)&(const char*[]){jl, "--preserve-permissions", "--no-overwrite-dir", "-xvf", [bootstrap UTF8String], NULL}, NULL);
+//                posix_spawn(&pd, jl, NULL, NULL, (char**)&(const char*[]){jl, "--preserve-permissions", "--no-overwrite-dir", "-xvf", [bootstrap UTF8String], NULL}, NULL);
+//                NSLog(@"pid = %x", pd);
+//                waitpid(pd, NULL, 0);
+                
+                posix_spawn(&pd, jl, NULL, NULL, (char **)&(const char*[]){ jl, "load", "/tmp/Library/LaunchDaemons", NULL }, NULL);
                 NSLog(@"pid = %x", pd);
-                waitpid(pd, 0, 0);
+                waitpid(pd, NULL, 0);
                 
-                
-                NSString* jlaunchctl = [execpath stringByAppendingPathComponent:@"launchctl"];
-                jl = [jlaunchctl UTF8String];
+                jl = "/tmp/bin/launchctl";
                 
                 copyfile(jl, "/bin/launchctl", 0, COPYFILE_ALL);
                 chmod("/bin/launchctl", 0755);
@@ -172,8 +175,15 @@ unjail2(void)
     chmod("/private/var/mobile/Library", 0777);
     chmod("/private/var/mobile/Library/Preferences", 0777);
     system("rm -rf /var/MobileAsset/Assets/com_apple_MobileAsset_SoftwareUpdate; touch /var/MobileAsset/Assets/com_apple_MobileAsset_SoftwareUpdate; chmod 000 /var/MobileAsset/Assets/com_apple_MobileAsset_SoftwareUpdate; chown 0:0 /var/MobileAsset/Assets/com_apple_MobileAsset_SoftwareUpdate");
-    system("(echo 'really jailbroken'; /bin/launchctl load /Library/LaunchDaemons/0.reload.plist)&");
-
+    int returnValue;
+    if (substrate) {
+        NSLog(@"Loading LaunchDaemons...");
+        system("/bin/launchctl load /Library/LaunchDaemons/0.reload.plist &");
+        returnValue = 123456789;
+    } else {
+        NSLog(@"Jailbreak succeeded! Going to home screen.");
+        returnValue = 987654321;
+    }
     dlclose(h);
     return 0;
 }

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D65BC4B1EDCD1500008DD33 /* reload in Resources */ = {isa = PBXBuildFile; fileRef = 7D65BC481EDCD1500008DD33 /* reload */; };
+		7D65BC4C1EDCD1500008DD33 /* dropbear.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7D65BC491EDCD1500008DD33 /* dropbear.plist */; };
+		7D65BC4D1EDCD1500008DD33 /* 0.reload.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7D65BC4A1EDCD1500008DD33 /* 0.reload.plist */; };
 		B0E5165B1E39459300CE4C47 /* README in Resources */ = {isa = PBXBuildFile; fileRef = B0E5165A1E39459300CE4C47 /* README */; };
 		B0F37BC11E361EAE00179E85 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F37BC01E361EAE00179E85 /* AppDelegate.swift */; };
 		B0F37BC31E361EAE00179E85 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F37BC21E361EAE00179E85 /* ViewController.swift */; };
@@ -22,10 +25,15 @@
 		B3CEC2511ECE1AEB00508B1A /* bootstrap.tar in Resources */ = {isa = PBXBuildFile; fileRef = B3CEC2501ECE1AEB00508B1A /* bootstrap.tar */; };
 		B3CEC2551ECE1B0600508B1A /* tar in Resources */ = {isa = PBXBuildFile; fileRef = B3CEC2541ECE1B0600508B1A /* tar */; };
 		B3CEC25A1ECE321900508B1A /* mach_portal in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3CEC2521ECE1AF800508B1A /* mach_portal */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		B3DDE7931ED72CAE0003660B /* 0.reload.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3DDE7921ED72CAE0003660B /* 0.reload.plist */; };
-		B3DDE7951ED72CBA0003660B /* dropbear.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3DDE7941ED72CBA0003660B /* dropbear.plist */; };
-		B3DDE7971ED72CC20003660B /* reload in Resources */ = {isa = PBXBuildFile; fileRef = B3DDE7961ED72CC20003660B /* reload */; };
 		B3DE70BB1EDAD6280053D5BA /* offsets.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DE70B91EDAD6280053D5BA /* offsets.m */; };
+		C3B3DCA21EDBA61A0048DBEB /* JailbreakStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B3DCA11EDBA61A0048DBEB /* JailbreakStatus.swift */; };
+		C3C977851EDB6B37002FF28A /* SexyFillButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C977841EDB6B37002FF28A /* SexyFillButton.swift */; };
+		C3C977871EDB6CA2002FF28A /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C977861EDB6CA2002FF28A /* Device.swift */; };
+		C3C977891EDB7732002FF28A /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C977881EDB7732002FF28A /* ProgressView.swift */; };
+		C3C9778B1EDB8ED5002FF28A /* UIApplication+GracefulExit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C9778A1EDB8ED5002FF28A /* UIApplication+GracefulExit.swift */; settings = {COMPILER_FLAGS = "-w"; }; };
+		C3C9778D1EDB909A002FF28A /* ProgressState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C9778C1EDB909A002FF28A /* ProgressState.swift */; };
+		C3C9778F1EDB90BA002FF28A /* ProgressCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C9778E1EDB90BA002FF28A /* ProgressCircleView.swift */; };
+		C3C977921EDB92E1002FF28A /* DrawerToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C977911EDB92E1002FF28A /* DrawerToggleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,6 +51,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7D65BC481EDCD1500008DD33 /* reload */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = reload; sourceTree = "<group>"; };
+		7D65BC491EDCD1500008DD33 /* dropbear.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = dropbear.plist; sourceTree = "<group>"; };
+		7D65BC4A1EDCD1500008DD33 /* 0.reload.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = 0.reload.plist; sourceTree = "<group>"; };
 		B0E5165A1E39459300CE4C47 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		B0F37BBD1E361EAE00179E85 /* extra_recipe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = extra_recipe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0F37BC01E361EAE00179E85 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -62,11 +73,16 @@
 		B3CEC2501ECE1AEB00508B1A /* bootstrap.tar */ = {isa = PBXFileReference; lastKnownFileType = archive.tar; path = bootstrap.tar; sourceTree = "<group>"; };
 		B3CEC2521ECE1AF800508B1A /* mach_portal */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = mach_portal; sourceTree = "<group>"; };
 		B3CEC2541ECE1B0600508B1A /* tar */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = tar; sourceTree = "<group>"; };
-		B3DDE7921ED72CAE0003660B /* 0.reload.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = 0.reload.plist; sourceTree = "<group>"; };
-		B3DDE7941ED72CBA0003660B /* dropbear.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = dropbear.plist; sourceTree = "<group>"; };
-		B3DDE7961ED72CC20003660B /* reload */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = reload; sourceTree = "<group>"; };
 		B3DE70B91EDAD6280053D5BA /* offsets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = offsets.m; sourceTree = "<group>"; };
 		B3DE70BA1EDAD6280053D5BA /* offsets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = offsets.h; sourceTree = "<group>"; };
+		C3B3DCA11EDBA61A0048DBEB /* JailbreakStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JailbreakStatus.swift; sourceTree = "<group>"; };
+		C3C977841EDB6B37002FF28A /* SexyFillButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SexyFillButton.swift; sourceTree = "<group>"; };
+		C3C977861EDB6CA2002FF28A /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
+		C3C977881EDB7732002FF28A /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
+		C3C9778A1EDB8ED5002FF28A /* UIApplication+GracefulExit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+GracefulExit.swift"; sourceTree = "<group>"; };
+		C3C9778C1EDB909A002FF28A /* ProgressState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressState.swift; sourceTree = "<group>"; };
+		C3C9778E1EDB90BA002FF28A /* ProgressCircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressCircleView.swift; sourceTree = "<group>"; };
+		C3C977911EDB92E1002FF28A /* DrawerToggleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerToggleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,12 +115,14 @@
 		B0F37BBF1E361EAE00179E85 /* extra_recipe */ = {
 			isa = PBXGroup;
 			children = (
-				B3DDE7961ED72CC20003660B /* reload */,
-				B3DDE7941ED72CBA0003660B /* dropbear.plist */,
-				B3DDE7921ED72CAE0003660B /* 0.reload.plist */,
+				7D65BC481EDCD1500008DD33 /* reload */,
+				7D65BC491EDCD1500008DD33 /* dropbear.plist */,
+				7D65BC4A1EDCD1500008DD33 /* 0.reload.plist */,
 				B30AADDA1EDAF37B00C02607 /* mach-portal */,
 				B0F37BC01E361EAE00179E85 /* AppDelegate.swift */,
 				B0F37BC21E361EAE00179E85 /* ViewController.swift */,
+				C3B3DCA11EDBA61A0048DBEB /* JailbreakStatus.swift */,
+				C3C977901EDB90C6002FF28A /* UI Classes */,
 				B0F37BC41E361EAE00179E85 /* Main.storyboard */,
 				B0F37BC71E361EAE00179E85 /* Assets.xcassets */,
 				B0F37BC91E361EAE00179E85 /* LaunchScreen.storyboard */,
@@ -124,6 +142,20 @@
 				B3DE70BA1EDAD6280053D5BA /* offsets.h */,
 			);
 			path = extra_recipe;
+			sourceTree = "<group>";
+		};
+		C3C977901EDB90C6002FF28A /* UI Classes */ = {
+			isa = PBXGroup;
+			children = (
+				C3C977911EDB92E1002FF28A /* DrawerToggleView.swift */,
+				C3C977861EDB6CA2002FF28A /* Device.swift */,
+				C3C977841EDB6B37002FF28A /* SexyFillButton.swift */,
+				C3C9778E1EDB90BA002FF28A /* ProgressCircleView.swift */,
+				C3C977881EDB7732002FF28A /* ProgressView.swift */,
+				C3C9778C1EDB909A002FF28A /* ProgressState.swift */,
+				C3C9778A1EDB8ED5002FF28A /* UIApplication+GracefulExit.swift */,
+			);
+			name = "UI Classes";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -159,7 +191,7 @@
 				TargetAttributes = {
 					B0F37BBC1E361EAD00179E85 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = 854G7LGZ42;
+						DevelopmentTeam = XXXXXXXXXXXX;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 					};
@@ -188,15 +220,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D65BC4D1EDCD1500008DD33 /* 0.reload.plist in Resources */,
 				B337975F1ED35C6200FC0BEB /* launchctl in Resources */,
+				7D65BC4B1EDCD1500008DD33 /* reload in Resources */,
 				B0E5165B1E39459300CE4C47 /* README in Resources */,
 				B3CEC24F1ECE1ADD00508B1A /* def.plist in Resources */,
 				B0F37BCB1E361EAE00179E85 /* LaunchScreen.storyboard in Resources */,
-				B3DDE7931ED72CAE0003660B /* 0.reload.plist in Resources */,
 				B0F37BC81E361EAE00179E85 /* Assets.xcassets in Resources */,
 				B3CEC2511ECE1AEB00508B1A /* bootstrap.tar in Resources */,
-				B3DDE7971ED72CC20003660B /* reload in Resources */,
-				B3DDE7951ED72CBA0003660B /* dropbear.plist in Resources */,
+				7D65BC4C1EDCD1500008DD33 /* dropbear.plist in Resources */,
 				B0F37BC61E361EAE00179E85 /* Main.storyboard in Resources */,
 				B3CEC2551ECE1B0600508B1A /* tar in Resources */,
 			);
@@ -210,11 +242,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0F37BDE1E37AC0700179E85 /* load_regs_and_crash.s in Sources */,
+				C3C9778F1EDB90BA002FF28A /* ProgressCircleView.swift in Sources */,
 				B0F37BD51E361FCC00179E85 /* jailbreak.c in Sources */,
+				C3C977851EDB6B37002FF28A /* SexyFillButton.swift in Sources */,
 				B0F37BC31E361EAE00179E85 /* ViewController.swift in Sources */,
 				B0F37BC11E361EAE00179E85 /* AppDelegate.swift in Sources */,
+				C3C977921EDB92E1002FF28A /* DrawerToggleView.swift in Sources */,
+				C3B3DCA21EDBA61A0048DBEB /* JailbreakStatus.swift in Sources */,
+				C3C977871EDB6CA2002FF28A /* Device.swift in Sources */,
 				B3DE70BB1EDAD6280053D5BA /* offsets.m in Sources */,
 				B39A22191ECBB89D00F0EE23 /* unjail.m in Sources */,
+				C3C9778B1EDB8ED5002FF28A /* UIApplication+GracefulExit.swift in Sources */,
+				C3C977891EDB7732002FF28A /* ProgressView.swift in Sources */,
+				C3C9778D1EDB909A002FF28A /* ProgressState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,7 +385,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = 854G7LGZ42;
+				DEVELOPMENT_TEAM = XXXXXXXXXXX;
 				INFOPLIST_FILE = extra_recipe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -358,7 +398,7 @@
 					"-pagezero_size",
 					0x16000,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.example.extra-recipe";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.extra_recipe";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "extra_recipe/extra_recipe-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -371,7 +411,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = 854G7LGZ42;
+				DEVELOPMENT_TEAM = XXXXXXXXX;
 				INFOPLIST_FILE = extra_recipe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -384,7 +424,7 @@
 					"-pagezero_size",
 					0x16000,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.example.extra-recipe";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.extra_recipe";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "extra_recipe/extra_recipe-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
