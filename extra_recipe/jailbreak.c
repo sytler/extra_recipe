@@ -853,8 +853,8 @@ unjail(void)
     uint64_t val = kread_uint64(kernel_base);
     printf("read from kernel memory: 0x%016llx\n", val);
 #else
-    extern int unjail2(uint64_t surfacevt);
-    rv = unjail2(surfacevt);
+    extern int unjail2(void);
+    rv = unjail2();
 #endif
 
     kwrite_uint64(our_proc + offsetof_p_ucred, our_cred);

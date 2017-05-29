@@ -19,61 +19,8 @@ my_IOConnectTrap4(int conn, long unused, uint64_t x1, uint64_t x2, uint64_t x0, 
   return rv;
 }
 
-NSMutableArray *consttable = nil;
-NSMutableArray *collide = nil;
-
-static int
-constload(void)
-{
-    struct utsname uts;
-    uname(&uts);
-    if (strstr(uts.version, "Marijuan")) {
-        return -2;
-    }
-
-    NSString *strv = [NSString stringWithUTF8String:uts.version];
-    NSArray *dp =[[NSArray alloc] initWithContentsOfFile: [[NSBundle mainBundle] pathForResource: @"def" ofType:@"plist"]];
-    int m = 0;
-    collide = [NSMutableArray new];
-
-    for (NSDictionary *dict in dp) {
-        if ([dict[@"vers"] isEqualToString:strv]) {
-            [collide setObject:[NSMutableArray new] atIndexedSubscript:m];
-            int i = 0;
-            for (NSString *str in dict[@"val"]) {
-                [collide[m] setObject:[NSNumber numberWithUnsignedLongLong:strtoull([str UTF8String], 0, 0)] atIndexedSubscript:i];
-                i++;
-            }
-            m++;
-        }
-    }
-    if (m) {
-        return 0;
-    }
-    return -1;
-}
-
-static char
-affine_const_by_surfacevt(uint64_t surfacevt_slid)
-{
-    for (NSArray *arr in collide) {
-        if ((surfacevt_slid & 0xfffff) == ([[arr objectAtIndex:1] unsignedLongLongValue] & 0xfffff)) {
-            NSLog(@"affined");
-            consttable = arr;
-            return 0;
-        }
-    }
-    return -1;
-}
-
-static uint64_t
-constget(int idx)
-{
-    return [[consttable objectAtIndex:idx] unsignedLongLongValue];
-}
-
 int
-unjail2(uint64_t surfacevt)
+unjail2(void)
 {
     void *h;
     int rv;
@@ -83,16 +30,6 @@ unjail2(uint64_t surfacevt)
         void (*x)(void *button, mach_port_t tfp0, uint64_t kernel_base, uint64_t allprocs, mach_port_t real_service_port, mach_port_t mitm_port);
 
         // @qwertyoruiop's memprot bypass
-
-        if (constload()) {
-            printf("err: constload\n");
-            return ERR_INTERNAL;
-        }
-
-        if (affine_const_by_surfacevt(surfacevt)) {
-            printf("err: affine\n");
-            return ERR_INTERNAL;
-        }
 
         h = dlopen(mp, RTLD_NOW | RTLD_LOCAL);
         if (!h) {
