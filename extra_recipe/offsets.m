@@ -31,8 +31,60 @@ uint64_t k_uuid_copy = 0;
 
 uint64_t allproc = 0;
 uint64_t realhost = 0;
-uint64_t surfacevt = 0;
 uint64_t call5 = 0;
+
+static NSMutableArray *consttable = nil;
+static NSMutableArray *collide = nil;
+
+static int
+constload(void)
+{
+    struct utsname uts;
+    uname(&uts);
+    if (strstr(uts.version, "Marijuan")) {
+        return -2;
+    }
+
+    NSString *strv = [NSString stringWithUTF8String:uts.version];
+    NSArray *dp =[[NSArray alloc] initWithContentsOfFile: [[NSBundle mainBundle] pathForResource: @"def" ofType:@"plist"]];
+    int m = 0;
+    collide = [NSMutableArray new];
+
+    for (NSDictionary *dict in dp) {
+        if ([dict[@"vers"] isEqualToString:strv]) {
+            [collide setObject:[NSMutableArray new] atIndexedSubscript:m];
+            int i = 0;
+            for (NSString *str in dict[@"val"]) {
+                [collide[m] setObject:[NSNumber numberWithUnsignedLongLong:strtoull([str UTF8String], 0, 0)] atIndexedSubscript:i];
+                i++;
+            }
+            m++;
+        }
+    }
+    if (m) {
+        return 0;
+    }
+    return -1;
+}
+
+static char
+affine_const_by_surfacevt(uint64_t surfacevt_slid)
+{
+    for (NSArray *arr in collide) {
+        if ((surfacevt_slid & 0xfffff) == ([[arr objectAtIndex:1] unsignedLongLongValue] & 0xfffff)) {
+            NSLog(@"affined");
+            consttable = arr;
+            return 0;
+        }
+    }
+    return -1;
+}
+
+uint64_t
+constget(int idx)
+{
+    return [[consttable objectAtIndex:idx] unsignedLongLongValue];
+}
 
 int
 init_offsets(void)
@@ -51,6 +103,7 @@ init_offsets(void)
 
     if (!strncmp(uts.machine, "iPhone9,", sizeof("iPhone9"))) {
         // iPhone 7 (plus)
+        uint64_t surfacevt;
         if ([version compare:@"10.1" options:NSNumericSearch] == NSOrderedAscending) {
             // 10.0[.x]
             mp = "@executable_path/mach-portal";
@@ -74,6 +127,9 @@ init_offsets(void)
             surfacevt = 0xfffffff006e521e0;
             call5 = 0xfffffff006337e10;
         }
+        if (constload() || affine_const_by_surfacevt(surfacevt)) {
+            return ERR_INTERNAL;
+        }
     } else if (!strcmp(uts.machine, "iPhone8,1")) {
         // iPhone 6s
         if ([version compare:@"10.2" options:NSNumericSearch] == NSOrderedSame) {
@@ -84,7 +140,6 @@ init_offsets(void)
             k_uuid_copy = 0xfffffff007459378;
             allproc = 0xfffffff0075ac438;
             realhost = 0xfffffff007538a98;
-            surfacevt = 0xfffffff006e84820;
             call5 = 0xfffffff0063cfe10;
             return ERR_UNSUPPORTED_YET; // TODO: remove after writing KPP bypass
         }
